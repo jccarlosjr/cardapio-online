@@ -13,6 +13,30 @@ const statusMapper = {
     'cancelled': { name: 'Cancelado', badge: 'bg-danger text-white' }
 };
 
+let orderSocket;
+
+function connectWebSocket(restaurant_id = 'all') {
+    if (orderSocket) {
+        orderSocket.close();
+    }
+
+    const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+    orderSocket = new WebSocket(protocol + window.location.host + `/ws/dashboard/orders/${restaurant_id}/`);
+
+    orderSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        if (data.type === 'new_order') {
+            showToast(`Novo pedido #${data.order_id} recebido!`, "info");
+            fetchOrders(); // Refresh the list
+        }
+    };
+
+    orderSocket.onclose = function(e) {
+        console.error('WebSocket fechado inesperadamente. Tentando reconectar em 5s...');
+        setTimeout(() => connectWebSocket(restaurant_id), 5000);
+    };
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize Modal
     orderDetailModal = new bootstrap.Modal(document.getElementById('orderDetailModal'));
@@ -20,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Bind event listeners for filters
     document.getElementById('filter-restaurant').addEventListener('change', (e) => {
         selectedRestaurant = e.target.value;
+        connectWebSocket(selectedRestaurant || 'all');
         fetchOrders();
     });
 
@@ -105,9 +130,11 @@ async function loadRestaurants() {
         select.addEventListener('change', updateRestaurantLink);
        
         // Fetch orders initially
+        connectWebSocket(selectedRestaurant || 'all');
         fetchOrders();
     } catch (error) {
         console.error("Erro ao carregar restaurantes:", error);
+        connectWebSocket('all');
         fetchOrders();
     }
 }

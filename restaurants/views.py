@@ -2,6 +2,7 @@ from rest_framework import viewsets
 from .models import Restaurant, RestaurantSettings, BusinessHours
 from .serializers import RestaurantSerializer, RestaurantSettingsSerializer, BusinessHoursSerializer
 from rest_framework.permissions import IsAuthenticated
+from app.mixins import IsAdministrador, IsAdministradorOrGerente
 
 
 def _return_same_restaurant_queryset(request):
@@ -13,7 +14,7 @@ def _return_same_restaurant_queryset(request):
 class RestaurantViewSet(viewsets.ModelViewSet):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdministrador]
 
     def get_queryset(self):
         return _return_same_restaurant_queryset(self.request)
@@ -22,7 +23,7 @@ class RestaurantViewSet(viewsets.ModelViewSet):
 class RestaurantSettingsViewSet(viewsets.ModelViewSet):
     queryset = RestaurantSettings.objects.all()
     serializer_class = RestaurantSettingsSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdministrador]
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -36,7 +37,7 @@ class RestaurantSettingsViewSet(viewsets.ModelViewSet):
 class BusinessHoursSettingsViewSet(viewsets.ModelViewSet):
     queryset = BusinessHours.objects.all()
     serializer_class = BusinessHoursSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdministradorOrGerente]
 
     def get_queryset(self):
         queryset = super().get_queryset()

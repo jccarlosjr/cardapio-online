@@ -4,6 +4,7 @@ from rest_framework import viewsets
 from .models import CustomUser, Role
 from .serializers import CustomUserSerializer, RoleSerializer
 from rest_framework.permissions import IsAuthenticated
+from app.mixins import IsAdministrador, IsAdministradorOrGerente
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 
@@ -32,7 +33,7 @@ class CustomLoginView(LoginView):
 class CustomUserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
-    permission_classes = [IsAuthenticated,]
+    permission_classes = [IsAdministradorOrGerente]
 
     def get_queryset(self):
         return _return_same_restaurant_queryset(
@@ -53,4 +54,4 @@ class CustomUserTemplate(LoginRequiredMixin, TemplateView):
 class RoleViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Role.objects.all()
     serializer_class = RoleSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdministradorOrGerente]

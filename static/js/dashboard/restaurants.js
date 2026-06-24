@@ -14,6 +14,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('form-new-restaurant').addEventListener('submit', saveRestaurant);
     document.getElementById('form-delete').addEventListener('submit', deleteRestaurant);
+
+    document.getElementById('restaurantModal').addEventListener('hidden.bs.modal', function () {
+        const form = document.getElementById('form-new-restaurant');
+        form.reset();
+        form.querySelector('input[name="id"]').value = '';
+        form.querySelector('input[name="is_active"]').checked = true;
+        document.getElementById('restaurantModalLabel').innerHTML = "Adicionar Restaurante";
+    });
 });
 
 async function saveRestaurant(event) {

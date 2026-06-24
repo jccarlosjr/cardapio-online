@@ -118,6 +118,7 @@ function newProduct() {
     document.getElementById('product-name').value = '';
     document.getElementById('product-description').value = '';
     document.getElementById('product-price').value = '';
+    document.getElementById('product-is-active').checked = true;
     document.getElementById('product-image').value = '';
     
     const catId = document.getElementById('product-category-id').value;
@@ -139,6 +140,7 @@ async function saveProduct() {
     const category = document.getElementById('product-category').value;
     const description = document.getElementById('product-description').value;
     const price = document.getElementById('product-price').value;
+    const isActive = document.getElementById('product-is-active').checked;
     const imageInput = document.getElementById('product-image');
 
     if (!name || !category || !price) { 
@@ -151,6 +153,7 @@ async function saveProduct() {
     formData.append('category', category);
     formData.append('description', description);
     formData.append('price', price);
+    formData.append('is_active', isActive ? 'true' : 'false');
 
     if (imageInput.files.length > 0) {
         formData.append('image', imageInput.files[0]);
@@ -204,6 +207,13 @@ function renderProductDetail(product){
 
     document.getElementById('product-price').value =
         product.price || '';
+
+    const isActiveCheckbox = document.getElementById('product-is-active');
+    if (product.hasOwnProperty('is_active')) {
+        isActiveCheckbox.checked = product.is_active;
+    } else {
+        isActiveCheckbox.checked = true;
+    }
 
     document.getElementById('product-image').value = '';
 
