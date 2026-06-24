@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<title>Usuários</title>
+{% endblock %}
+
+{% block content %}
+<main class="container py-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Usuários</li>
+        </ol>
+    </nav>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="text-muted fw-semibold mb-0">Usuários</h4>
+        <button class="btn btn-sm btn-primary" id="add-user-button">
+            <i class="bi bi-plus-circle"></i> Adicionar Usuário
+        </button>
+    </div>
+
+    <div class="user_list mt-3"></div>
+</main>
+
+{% include 'partials/users_modal.html' %}
+{% include 'partials/delete_modal.html' %}
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/accounts/users.js' %}"></script>
+{% endblock %}

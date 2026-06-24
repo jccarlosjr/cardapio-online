@@ -1,0 +1,72 @@
+
+<div class="modal modal-lg fade" 
+        data-bs-backdrop="static" data-bs-keyboard="true"  
+        id="restaurantModal" tabindex="-1" aria-hidden="true"
+        aria-labelledby="restaurantModalLabel" >
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="restaurantModalLabel">Adicionar Restaurante</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body ">
+        <form id="form-new-restaurant">
+            <div class="row d-flex justify-content-center">
+                <input type="text" id="id" name="id" hidden>
+                <div class="form-group col-md-8">
+                    <label for="name">Nome</label>
+                    <input id="name" name="name" type="text" class="form-control form-control-sm capitalize-mask">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="phone">Telefone</label>
+                    <input id="phone" name="phone" type="text" maxlength="15" class="form-control form-control-sm celphone-mask">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="zip_code">CEP</label>
+                    <input id="zip_code" maxlength="9" name="zip_code" type="text" class="form-control form-control-sm cep-mask">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="address">Endereço</label>
+                    <input id="address" name="address" type="text" class="form-control form-control-sm capitalize-mask">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="number">Nº</label>
+                    <input id="number" name="number" type="text" class="form-control form-control-sm capitalize-mask">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="neighborhood">Bairro</label>
+                    <input id="neighborhood" name="neighborhood" type="text" class="form-control form-control-sm capitalize-mask">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="city">Cidade</label>
+                    <input id="city" name="city" type="text" class="form-control form-control-sm capitalize-mask">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="state">Estado</label>
+                    <select name="state" class="form-select form-select-sm capitalize-mask" id="state">
+                        {% include 'partials/ufs.html' %}
+                    </select>
+                </div>
+
+                <div class="form-group col-md-12 mt-3">
+                    <label for="is_active">Ativo</label>
+                    <input id="is_active" name="is_active" type="checkbox" class="form-check-input form-check-input-sm">
+                </div>
+
+                <div class="form-group col-md-12 mt-3">
+                    <label for="logo">Logo</label>
+                    <input id="logo" name="logo" type="file" class="form-control form-control-sm">
+                </div>
+            </div>
+
+            <div class="mt-4 text-end">
+                <button type="submit" id="btn-new-restaurant-modal" class="btn btn-sm btn-primary mt-4">
+                    Salvar
+                </button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

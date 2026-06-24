@@ -1,0 +1,61 @@
+.navbar-modern {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Dark mode */
+[data-bs-theme="dark"] .navbar-modern {
+    background: rgba(33, 37, 41, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Usuário */
+.user-box {
+    padding: 4px 10px;
+    border-radius: 50px;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+[data-bs-theme="dark"] .user-box {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+
+/* Botões */
+.icon-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    color: inherit;
+}
+
+.icon-btn i {
+    font-size: 1rem;
+}
+
+/* Hover moderno */
+.icon-btn:hover {
+    background: rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+}
+
+[data-bs-theme="dark"] .icon-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Grupo de ações */
+.action-group {
+    padding-left: 10px;
+    border-left: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+[data-bs-theme="dark"] .action-group {
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}

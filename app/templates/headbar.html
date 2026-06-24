@@ -1,0 +1,40 @@
+<nav class="navbar navbar-expand-lg navbar-modern px-3">
+  <div class="container-fluid">
+    <!-- Toggle mobile -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <div class="ms-auto d-flex align-items-center gap-3">
+        <!-- Ações -->
+        <div class="d-flex align-items-center gap-2 action-group">
+
+          <a href="#" class="icon-btn" title="Início">
+            <i class="bi bi-house"></i>
+          </a>
+
+          <a href="#" class="icon-btn" title="Item">
+            <i class="bi bi-box-seam"></i>
+          </a>
+
+          <a href="#" class="icon-btn" title="Perfil">
+            <i class="bi bi-person-gear"></i>
+          </a>
+
+          <button id="theme-toggle" class="icon-btn" title="Tema">
+            <i class="bi bi-lightbulb"></i>
+          </button>
+
+          <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button class="icon-btn text-danger" title="Sair">
+              <i class="bi bi-box-arrow-right"></i>
+            </button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

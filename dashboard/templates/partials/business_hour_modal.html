@@ -1,0 +1,80 @@
+<div class="modal modal-lg fade" data-bs-backdrop="static" data-bs-keyboard="true" id="businessHourModal" tabindex="-1"
+    aria-hidden="true" aria-labelledby="businessHourModalLabel">
+
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="businessHourModalLabel">
+                    Horário de Funcionamento
+                </h1>
+                <button class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form id="form-business-hour">
+                    <input type="hidden" name="id">
+                    <input type="hidden" name="restaurant">
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Dia da Semana
+                        </label>
+                        <select class="form-select" name="day_of_week">
+                            <option value="0">Domingo</option>
+                            <option value="1">Segunda</option>
+                            <option value="2">Terça</option>
+                            <option value="3">Quarta</option>
+                            <option value="4">Quinta</option>
+                            <option value="5">Sexta</option>
+                            <option value="6">Sábado</option>
+                        </select>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                Abre
+                            </label>
+                            <input type="time" class="form-control" name="open_time">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                Fecha
+                            </label>
+                            <input type="time" class="form-control" name="close_time">
+                        </div>
+                    </div>
+                    <div class="form-check mt-3">
+                        <input class="form-check-input" type="checkbox" name="is_closed" id="is_closed">
+                        <label class="form-check-label">
+                            Fechado neste dia
+                        </label>
+                    </div>
+
+                    <div class="mt-4 text-end">
+                        <button type="submit" class="btn btn-primary mt-4" id="btn-business-hour">
+                            Salvar
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-body">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Dia</th>
+                            <th>Abre</th>
+                            <th>Fecha</th>
+                            <th>Fechado</th>
+                            <th width="120">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="business-hours-list">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

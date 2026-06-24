@@ -1,0 +1,113 @@
+
+<!-- Modal Detalhes do Pedido -->
+<div class="modal fade" id="orderDetailModal" tabindex="-1" aria-labelledby="orderDetailModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header border-bottom-0 py-3">
+        <h5 class="modal-title fw-bold" id="orderDetailModalLabel">
+          <i class="bi bi-receipt me-2 text-primary"></i>Pedido <span id="modal-order-id">#0000</span>
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <!-- Status e Impressão Row -->
+        <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+          <div>
+            <span class="text-muted small d-block mb-1">Status Atual</span>
+            <span id="modal-order-status-badge" class="badge fs-6 py-2 px-3">Pendente</span>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-outline-secondary btn-sm" id="btn-print-receipt">
+              <i class="bi bi-printer me-1"></i> Imprimir Cupom
+            </button>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <!-- Coluna Esquerda: Itens e Totais -->
+          <div class="col-12 col-md-7 border-end">
+            <h6 class="fw-bold text-muted mb-3 text-uppercase small" style="letter-spacing: 0.5px;">Itens do Pedido</h6>
+            <div class="table-responsive">
+              <table class="table align-middle table-borderless">
+                <thead class="table">
+                  <tr>
+                    <th class="small text-muted py-2">Item</th>
+                    <th class="small text-muted py-2">Detalhes</th>
+                    <th class="small text-muted py-2 text-center" style="width: 60px;">Qtd</th>
+                    <th class="small text-muted py-2 text-end" style="width: 90px;">Preço</th>
+                    <th class="small text-muted py-2 text-end" style="width: 100px;">Subtotal</th>
+                  </tr>
+                </thead>
+                <tbody id="modal-order-items-body">
+                  <!-- Dynamic Items -->
+                </tbody>
+              </table>
+            </div>
+
+            <div class="rounded p-3 mt-3">
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Valor dos Itens:</span>
+                <span class="fw-semibold" id="modal-order-subtotal">R$ 0,00</span>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Taxa de Entrega:</span>
+                <span class="fw-semibold" id="modal-order-delivery">R$ 0,00</span>
+              </div>
+              <hr class="my-2">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold">Total:</span>
+                <span class="fw-bold fs-4 text-primary" id="modal-order-total">R$ 0,00</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coluna Direita: Cliente, Endereço e Ações -->
+          <div class="col-12 col-md-5">
+            <!-- Cliente -->
+            <div class="mb-4">
+              <h6 class="fw-bold text-muted mb-2 text-uppercase small" style="letter-spacing: 0.5px;">Dados do Cliente</h6>
+              <div class="card border-0 p-3">
+                <div class="fw-bold mb-1" id="modal-customer-name">-</div>
+                <div class="small text-muted mb-3" id="modal-customer-email">-</div>
+                <div>
+                  <a href="#" target="_blank" id="modal-customer-phone-link" class="btn btn-sm btn-outline-success w-100 py-2">
+                    <i class="bi bi-whatsapp me-1"></i> Contatar Cliente
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Endereço -->
+            <div class="mb-4">
+              <h6 class="fw-bold text-muted mb-2 text-uppercase small" style="letter-spacing: 0.5px;">Endereço de Entrega</h6>
+              <div class="card border-0 p-3">
+                <div class="small mb-3" id="modal-address-text" style="line-height: 1.5;">-</div>
+                <div>
+                  <a href="#" target="_blank" id="modal-address-maps-link" class="btn btn-sm btn-outline-primary w-100 py-2">
+                    <i class="bi bi-geo-alt me-1"></i> Rota no Google Maps
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Histórico -->
+            <div>
+              <h6 class="fw-bold text-muted mb-2 text-uppercase small" style="letter-spacing: 0.5px;">Histórico de Status</h6>
+              <div class="order-timeline mt-2" id="modal-order-timeline">
+                <!-- Timeline Items -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-top-0 d-flex justify-content-between p-3">
+        <div>
+          <!-- Lado esquerdo do rodapé se necessário -->
+        </div>
+        <div class="d-flex gap-2" id="modal-action-buttons">
+          <!-- Dynamic Action Buttons (e.g. Aceitar, Preparar, etc.) -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

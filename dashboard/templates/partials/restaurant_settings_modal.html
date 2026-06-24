@@ -1,0 +1,44 @@
+
+<div class="modal modal-lg fade" 
+        data-bs-backdrop="static" data-bs-keyboard="true"  
+        id="restaurantSettingsModal" tabindex="-1" aria-hidden="true"
+        aria-labelledby="restaurantSettingsModalLabel" >
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="restaurantSettingsModalLabel">Configurações</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body ">
+        <form id="form-settings">
+            <div class="row d-flex justify-content-center">
+                <input type="text" id="id" name="id" hidden>
+                <input type="text" id="restaurant" name="restaurant" hidden>
+
+                <div class="form-group col-md-3">
+                    <label for="delivery_fee">Taxa de Entrega</label>
+                    <input id="delivery_fee" name="delivery_fee" type="text" maxlength="15" class="form-control form-control-sm currency" placeholder="0.00">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="tax_rate">Taxa</label>
+                    <input id="tax_rate" name="tax_rate" type="text" class="form-control form-control-sm numbers-only currency" placeholder="0.0%">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="min_order_value">Valor Mínimo</label>
+                    <input id="min_order_value" name="min_order_value" type="text" class="form-control form-control-sm currency" placeholder="0.00">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="pix_key">Chave Pix</label>
+                    <input id="pix_key" name="pix_key" type="text" class="form-control form-control-sm">
+                </div>
+            </div>
+            <div class="mt-4 text-end">
+            <button type="submit" id="btn-settings-modal" class="btn btn-sm btn-primary mt-4">
+                Salvar
+            </button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

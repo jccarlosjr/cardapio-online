@@ -1,0 +1,210 @@
+/* Premium Cards styling */
+.order-card {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border-left: 5px solid transparent;
+    background-color: #fff;
+}
+
+[data-bs-theme="dark"] .order-card {
+    background-color: #212529;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.order-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Border colors per status */
+.order-card[data-status="pending"] {
+    border-left-color: #ffc107;
+}
+
+.order-card[data-status="confirmed"] {
+    border-left-color: #0dcaf0;
+}
+
+.order-card[data-status="preparing"] {
+    border-left-color: #0d6efd;
+}
+
+.order-card[data-status="ready"] {
+    border-left-color: #198754;
+}
+
+.order-card[data-status="delivering"] {
+    border-left-color: #6c757d;
+}
+
+.order-card[data-status="delivered"] {
+    border-left-color: #212529;
+}
+
+[data-bs-theme="dark"] .order-card[data-status="delivered"] {
+    border-left-color: #f8fafc;
+}
+
+.order-card[data-status="cancelled"] {
+    border-left-color: #dc3545;
+}
+
+/* Active styling for summary filters */
+.status-card {
+    border: 2px solid transparent !important;
+    transition: all 0.25s ease;
+}
+
+.status-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05) !important;
+}
+
+.status-card.active {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08) !important;
+}
+
+.status-card.active[data-status="pending"] {
+    border-color: #ffc107 !important;
+    background-color: rgba(255, 193, 7, 0.05) !important;
+}
+
+.status-card.active[data-status="confirmed"] {
+    border-color: #0dcaf0 !important;
+    background-color: rgba(13, 202, 240, 0.05) !important;
+}
+
+.status-card.active[data-status="preparing"] {
+    border-color: #0d6efd !important;
+    background-color: rgba(13, 110, 253, 0.05) !important;
+}
+
+.status-card.active[data-status="ready"] {
+    border-color: #198754 !important;
+    background-color: rgba(25, 135, 84, 0.05) !important;
+}
+
+.status-card.active[data-status="delivering"] {
+    border-color: #6c757d !important;
+    background-color: rgba(108, 117, 125, 0.05) !important;
+}
+
+.status-card.active[data-status="delivered"] {
+    border-color: #212529 !important;
+    background-color: rgba(33, 37, 41, 0.05) !important;
+}
+
+[data-bs-theme="dark"] .status-card.active[data-status="delivered"] {
+    border-color: #f8fafc !important;
+    background-color: rgba(248, 250, 252, 0.05) !important;
+}
+
+.status-card.active[data-status="cancelled"] {
+    border-color: #dc3545 !important;
+    background-color: rgba(220, 53, 69, 0.05) !important;
+}
+
+/* Timeline styling */
+.order-timeline {
+    position: relative;
+    padding-left: 20px;
+    border-left: 2px solid #e9ecef;
+}
+
+[data-bs-theme="dark"] .order-timeline {
+    border-left-color: #343a40;
+}
+
+.timeline-item {
+    position: relative;
+    padding-bottom: 12px;
+}
+
+.timeline-item:last-child {
+    padding-bottom: 0;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -26px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #cbd5e1;
+    border: 2px solid #fff;
+}
+
+[data-bs-theme="dark"] .timeline-item::before {
+    border-color: #212529;
+    background-color: #495057;
+}
+
+.timeline-item.active::before {
+    background-color: #0d6efd;
+}
+
+/* Print styles */
+#print-receipt-area {
+    display: none;
+}
+
+@media print {
+    body>* {
+        display: none !important;
+    }
+
+    #print-receipt-area {
+        display: block !important;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 80mm;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 12px;
+        color: #000;
+        background: #fff;
+        padding: 10px;
+        line-height: 1.3;
+    }
+
+    .receipt-header {
+        text-align: center;
+        margin-bottom: 10px;
+        border-bottom: 1px dashed #000;
+        padding-bottom: 10px;
+    }
+
+    .receipt-body {
+        margin-bottom: 10px;
+    }
+
+    .receipt-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0;
+    }
+
+    .receipt-table th,
+    .receipt-table td {
+        text-align: left;
+        padding: 3px 0;
+    }
+
+    .receipt-table th.text-end,
+    .receipt-table td.text-end {
+        text-align: right;
+    }
+
+    .receipt-divider {
+        border-top: 1px dashed #000;
+        margin: 8px 0;
+    }
+
+    .receipt-total {
+        font-weight: bold;
+        font-size: 14px;
+    }
+}

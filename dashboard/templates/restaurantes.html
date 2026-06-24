@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<title>Restaurantes</title>
+{% endblock %}
+
+{% block content %}
+
+<main class="container py-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Restaurantes</li>
+        </ol>
+    </nav>
+    {% if user.is_staff %}
+    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#restaurantModal">
+        <i class="bi bi-plus-circle"></i> Adicionar Restaurante
+    </button>
+    {% endif %}
+    <div class="restaurant_list mt-5"></div>
+</main>
+
+{% include 'partials/restaurant_modal.html' %}
+{% include 'partials/restaurant_settings_modal.html' %}
+{% include 'partials/business_hour_modal.html' %}
+{% include 'partials/delete_modal.html' %}
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/dashboard/restaurant_settings.js' %}"></script>
+<script src="{% static 'js/dashboard/business_hour.js' %}"></script>
+<script src="{% static 'js/dashboard/restaurants.js' %}"></script>
+{% endblock %}

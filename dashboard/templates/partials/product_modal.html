@@ -1,0 +1,174 @@
+
+<div class="modal modal-xl fade" 
+        data-bs-backdrop="static" data-bs-keyboard="true"  
+        id="productModal" tabindex="-1" aria-hidden="true"
+        aria-labelledby="productModalLabel" >
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="productModalLabel">Produtos Para Essa Categoria</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body ">
+        <input type="text" id="product-category-id" name="product-category-id" hidden>
+        <input type="text" id="current-product-id" hidden>
+
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        Produtos
+                    </h5>
+                </div>
+                <div id="product-list" class="list-group list-group-flush">
+                </div>
+
+                <div class="card-body">
+                    <button id="btn-novo-produto" class="btn btn-sm btn-success w-100">
+                        + Novo Produto
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo -->
+        <div class="col-md-9">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h4>
+                        Editar Produto
+                    </h4>
+                </div>
+
+                <div class="card-body">
+                    <!-- Dados básicos -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">
+                                Nome
+                            </label>
+                            <input id="product-name" class="form-control form-control-sm">
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">
+                                Categoria
+                            </label>
+                            <select id="product-category" class="form-select form-select-sm"></select>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label">
+                                Descrição
+                            </label>
+                            <textarea id="product-description" class="form-control form-control-sm" rows="3"></textarea>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>
+                                Preço
+                            </label>
+                            <input id="product-price" class="form-control form-control-sm currency">
+                        </div>
+
+                        <div class="col-md-8">
+                            <label>
+                                Imagem Principal
+                            </label>
+                            <input type="file" id="product-image" class="form-control form-control-sm">
+                        </div>
+                    </div>
+
+                    <div id="options-section">
+                        <hr>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4>
+                                Grupos de Opções
+                            </h4>
+                            <button class="btn btn-sm btn-primary" id="btn-novo-grupo">
+                                + Novo Grupo
+                            </button>
+                        </div>
+
+                        <div class="accordion" id="product-options">
+                            <!-- Os grupos de opções serão renderizados aqui pelo Javascript -->
+                        </div>
+                    </div>
+
+                    <hr>
+                    <div class="text-end">
+                        <button id="btn-salvar-produto" class="btn btn-sm btn-primary btn-lg">
+                            Salvar Produto
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para Grupo de Opções -->
+<div class="modal fade" id="productOptionGroupModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="productOptionGroupModalLabel">Grupo de Opções</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="current-group-id">
+        <div class="mb-3">
+          <label>Nome do Grupo</label>
+          <input type="text" id="group-name" class="form-control form-control-sm">
+        </div>
+        <div class="row">
+          <div class="col-6 mb-3">
+            <label>Mínimo selecionável</label>
+            <input type="number" id="group-min-select" class="form-control form-control-sm" value="0">
+          </div>
+          <div class="col-6 mb-3">
+            <label>Máximo selecionável</label>
+            <input type="number" id="group-max-select" class="form-control form-control-sm" value="1">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary btn-sm" id="btn-salvar-grupo">Salvar Grupo</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para Opção de Produto -->
+<div class="modal fade" id="productOptionModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="productOptionModalLabel">Opção de Produto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="current-option-id">
+        <input type="hidden" id="current-option-group-id">
+        <div class="mb-3">
+          <label>Nome da Opção</label>
+          <input type="text" id="option-name" class="form-control form-control-sm">
+        </div>
+        <div class="mb-3">
+          <label>Preço Adicional</label>
+          <input type="text" id="option-price" class="form-control form-control-sm currency" value="0.00">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary btn-sm" id="btn-salvar-opcao">Salvar Opção</button>
+      </div>
+    </div>
+  </div>
+</div>
