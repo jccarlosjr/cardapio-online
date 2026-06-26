@@ -4,24 +4,16 @@ from django.views.generic import TemplateView
 from .models import Category, Product, ProductImage, ProductOptionGroup, ProductOption
 from .serializers import CategorySerializer, ProductSerializer, ProductImageSerializer, ProductOptionGroupSerializer, ProductOptionSerializer
 from rest_framework.permissions import IsAuthenticated
-from app.mixins import IsAdministradorOrGerenteOrReadOnly
-
-
-def _return_same_restaurant_queryset(request, queryset):
-    if request.user.is_superuser and not request.user.restaurant:
-        restaurant_id = request.query_params.get('restaurant_id')
-        if restaurant_id is not None:
-            return queryset.filter(restaurant_id=restaurant_id)
-    return queryset.filter(restaurant_id=request.user.restaurant.id)
+from app.permissions import GlobalDefaultPermission, return_same_restaurant_queryset
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [IsAdministradorOrGerenteOrReadOnly]
+    permission_classes = (IsAuthenticated, GlobalDefaultPermission)
 
     def get_queryset(self):
-        return _return_same_restaurant_queryset(
+        return return_same_restaurant_queryset(
             self.request,
             self.queryset
         )
@@ -35,10 +27,10 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    permission_classes = [IsAdministradorOrGerenteOrReadOnly]
+    permission_classes = (IsAuthenticated, GlobalDefaultPermission)
 
     def get_queryset(self):
-        queryset = _return_same_restaurant_queryset(
+        queryset = return_same_restaurant_queryset(
             self.request,
             self.queryset
         )
@@ -56,13 +48,13 @@ class ProductViewSet(viewsets.ModelViewSet):
 class ProductImageViewSet(viewsets.ModelViewSet):
     queryset = ProductImage.objects.all()
     serializer_class = ProductImageSerializer
-    permission_classes = [IsAdministradorOrGerenteOrReadOnly]
+    permission_classes = (IsAuthenticated, GlobalDefaultPermission)
 
 
 class ProductOptionGroupViewSet(viewsets.ModelViewSet):
     queryset = ProductOptionGroup.objects.all()
     serializer_class = ProductOptionGroupSerializer
-    permission_classes = [IsAdministradorOrGerenteOrReadOnly]
+    permission_classes = (IsAuthenticated, GlobalDefaultPermission)
 
     def get_queryset(self):
         if self.request.user.is_superuser and not hasattr(self.request.user, 'restaurant'):
@@ -73,7 +65,7 @@ class ProductOptionGroupViewSet(viewsets.ModelViewSet):
 class ProductOptionViewSet(viewsets.ModelViewSet):
     queryset = ProductOption.objects.all()
     serializer_class = ProductOptionSerializer
-    permission_classes = [IsAdministradorOrGerenteOrReadOnly]
+    permission_classes = (IsAuthenticated, GlobalDefaultPermission)
 
     def get_queryset(self):
         if self.request.user.is_superuser and not hasattr(self.request.user, 'restaurant'):

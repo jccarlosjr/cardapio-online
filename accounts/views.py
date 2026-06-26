@@ -1,20 +1,14 @@
 from django.contrib.auth.views import LoginView
 from .forms import CustomAuthenticationForm
 from rest_framework import viewsets
-from .models import CustomUser, Role
-from .serializers import CustomUserSerializer, RoleSerializer
+from django.contrib.auth.models import Group
+from .models import CustomUser
+from .serializers import CustomUserSerializer, GroupSerializer
 from rest_framework.permissions import IsAuthenticated
-from app.mixins import IsAdministrador, IsAdministradorOrGerente
+from app.permissions import GlobalDefaultPermission, return_same_restaurant_queryset
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 
-
-def _return_same_restaurant_queryset(request, queryset):
-    if request.user.is_superuser and not request.user.restaurant:
-        restaurant_id = request.query_params.get('restaurant_id')
-        if restaurant_id is not None:
-            return queryset.filter(restaurant_id=restaurant_id)
-    return queryset.filter(restaurant_id=request.user.restaurant.id)
 
 
 class CustomLoginView(LoginView):
@@ -33,10 +27,10 @@ class CustomLoginView(LoginView):
 class CustomUserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
-    permission_classes = [IsAdministradorOrGerente]
+    permission_classes = (IsAuthenticated, GlobalDefaultPermission)
 
     def get_queryset(self):
-        return _return_same_restaurant_queryset(
+        return return_same_restaurant_queryset(
             self.request,
             self.queryset
         )
@@ -47,11 +41,11 @@ class CustomUserViewSet(viewsets.ModelViewSet):
         )
 
 
+class GroupViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+    permission_classes = (IsAuthenticated,)
+
+
 class CustomUserTemplate(LoginRequiredMixin, TemplateView):
     template_name = 'users.html'
-
-
-class RoleViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Role.objects.all()
-    serializer_class = RoleSerializer
-    permission_classes = [IsAdministradorOrGerente]

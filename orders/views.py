@@ -2,12 +2,13 @@ from rest_framework import viewsets
 from .models import Order, OrderItem, OrderStatusHistory
 from .serializers import OrderSerializer, OrderItemSerializer, OrderStatusHistorySerializer
 from rest_framework.permissions import IsAuthenticated
+from app.permissions import GlobalDefaultPermission
 
 
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = (IsAuthenticated, GlobalDefaultPermission)
 
     def get_queryset(self):
         queryset = self.queryset
@@ -29,7 +30,7 @@ class OrderViewSet(viewsets.ModelViewSet):
 class OrderItemViewSet(viewsets.ModelViewSet):
     queryset = OrderItem.objects.all()
     serializer_class = OrderItemSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = (IsAuthenticated, GlobalDefaultPermission)
 
     def get_queryset(self):
         queryset = self.queryset
@@ -42,10 +43,18 @@ class OrderItemViewSet(viewsets.ModelViewSet):
         return queryset
 
 
+class OrderStatusHistoryPermission(GlobalDefaultPermission):
+    def has_permission(self, request, view):
+        # Permite se o usuário possuir a permissão de alterar pedidos
+        if request.user.has_perm('orders.change_order'):
+            return True
+        return super().has_permission(request, view)
+
+
 class OrderStatusHistoryViewSet(viewsets.ModelViewSet):
     queryset = OrderStatusHistory.objects.all()
     serializer_class = OrderStatusHistorySerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = (IsAuthenticated, OrderStatusHistoryPermission)
 
     def get_queryset(self):
         queryset = self.queryset

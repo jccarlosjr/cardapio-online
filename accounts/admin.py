@@ -1,18 +1,18 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser, Role
+from .models import CustomUser
 
 
 class CustomUserAdmin(UserAdmin):
     ordering = ['email']
 
     list_display = [
-        'email', 'is_active', 'role', 'restaurant',
+        'email', 'is_active', 'restaurant',
         'is_staff', 'is_superuser',
         ]
 
     fieldsets = (
-        (None, {'fields': ('password', 'role', 'restaurant')}),
+        (None, {'fields': ('password', 'restaurant')}),
         ('Personal info', {'fields': ('first_name', 'last_name', 'email')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         ('Important dates', {'fields': ('last_login',)}),
@@ -26,8 +26,3 @@ class CustomUserAdmin(UserAdmin):
     )
 
 admin.site.register(CustomUser, CustomUserAdmin)
-
-@admin.register(Role)
-class RoleAdmin(admin.ModelAdmin):
-    list_display = ['name']
-    search_fields = ['name']

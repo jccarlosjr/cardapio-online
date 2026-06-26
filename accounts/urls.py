@@ -6,7 +6,7 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'api/accounts', views.CustomUserViewSet)
-router.register(r'api/roles', views.RoleViewSet)
+router.register(r'api/groups', views.GroupViewSet)
 
 urlpatterns = [
     path('login/', views.CustomLoginView.as_view(), name='login'),

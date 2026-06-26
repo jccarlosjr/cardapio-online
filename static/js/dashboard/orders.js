@@ -445,9 +445,16 @@ function openOrderDetails(orderId, showModal = true) {
         const timeStr = maskDateHour(hist.created_at);
 
         timelineEl.innerHTML += `
-            <div class="timeline-item active">
-                <div class="small fw-semibold">Status alterado para "${newState}"</div>
-                <div class="text-muted small">${timeStr}</div>
+            <div class="timeline-item active d-flex justify-content-between align-items-center" id="history-item-${hist.id}">
+                <div class="w-100 me-2">
+                    <div class="small fw-semibold">Status alterado para "${newState}"</div>
+                    <div class="text-muted small">${timeStr}</div>
+                </div>
+                <div>
+                    <button class="btn btn-sm btn-link p-0 text-secondary btn-edit-history" onclick="editHistoryItem(${order.id}, ${hist.id}, '${hist.new_status}')" title="Editar este status">
+                        <i class="bi bi-pencil-fill"></i>
+                    </button>
+                </div>
             </div>
         `;
     });
@@ -583,4 +590,67 @@ function printReceipt(order, subtotal, delivery, total) {
     `;
 
     window.print();
+}
+
+let originalHistoryItemHTMLs = {};
+
+function editHistoryItem(orderId, histId, currentStatus) {
+    const historyItemEl = document.getElementById(`history-item-${histId}`);
+    if (!historyItemEl) return;
+
+    originalHistoryItemHTMLs[histId] = historyItemEl.innerHTML;
+
+    const choicesHtml = Object.keys(statusMapper).map(key => {
+        const selected = key === currentStatus ? 'selected' : '';
+        return `<option value="${key}" ${selected}>${statusMapper[key].name}</option>`;
+    }).join('');
+
+    const timeEl = historyItemEl.querySelector('.text-muted.small');
+    const timeStr = timeEl ? timeEl.innerHTML : '';
+
+    historyItemEl.innerHTML = `
+        <div class="w-100 me-2">
+            <div class="d-flex align-items-center gap-2 mb-1">
+                <span class="small fw-semibold text-nowrap">Status:</span>
+                <select class="form-select form-select-sm" id="select-history-status-${histId}">
+                    ${choicesHtml}
+                </select>
+            </div>
+            <div class="text-muted small">${timeStr}</div>
+        </div>
+        <div class="d-flex gap-1 align-items-center">
+            <button class="btn btn-sm btn-success px-2 py-1 d-flex align-items-center justify-content-center" onclick="saveHistoryItem(${orderId}, ${histId})" title="Salvar" style="height: 31px;">
+                <i class="bi bi-check-lg"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-secondary px-2 py-1 d-flex align-items-center justify-content-center" onclick="cancelEditHistoryItem(${histId})" title="Cancelar" style="height: 31px;">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+    `;
+}
+
+function cancelEditHistoryItem(histId) {
+    const historyItemEl = document.getElementById(`history-item-${histId}`);
+    if (historyItemEl && originalHistoryItemHTMLs[histId]) {
+        historyItemEl.innerHTML = originalHistoryItemHTMLs[histId];
+        delete originalHistoryItemHTMLs[histId];
+    }
+}
+
+async function saveHistoryItem(orderId, histId) {
+    const selectEl = document.getElementById(`select-history-status-${histId}`);
+    if (!selectEl) return;
+    const newStatus = selectEl.value;
+
+    try {
+        await patchData(`/api/orderstatus/${histId}/`, { new_status: newStatus }, () => {
+            fetchOrders();
+            // Dá um tempo curto para a lista atualizar no background e recarrega os detalhes do modal
+            setTimeout(() => {
+                openOrderDetails(orderId, false);
+            }, 300);
+        });
+    } catch (error) {
+        console.error("Erro ao salvar histórico:", error);
+    }
 }

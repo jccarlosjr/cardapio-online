@@ -1,19 +1,24 @@
 from rest_framework import serializers
-from .models import CustomUser, Role
+from django.contrib.auth.models import Group
+from .models import CustomUser
 
 
-class RoleSerializer(serializers.ModelSerializer):
+class GroupSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Role
-        fields = '__all__'
+        model = Group
+        fields = ['id', 'name']
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
-    role_name = serializers.CharField(source='role.name', read_only=True)
+    groups = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Group.objects.all(),
+        required=False
+    )
 
     class Meta:
         model = CustomUser
-        fields = ['id', 'name', 'email', 'role', 'role_name', 'is_active', 'password']
+        fields = ['id', 'name', 'email', 'is_active', 'password', 'groups']
         extra_kwargs = {
             'password': {'write_only': True, 'required': False},
         }
@@ -33,3 +38,4 @@ class CustomUserSerializer(serializers.ModelSerializer):
             user.set_password(password)
             user.save()
         return user
+

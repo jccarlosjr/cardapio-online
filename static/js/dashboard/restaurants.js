@@ -1,19 +1,13 @@
 let restaurantModal;
-let deleteModal;
 
 document.addEventListener('DOMContentLoaded', () => {
     restaurantModal = new bootstrap.Modal(
         document.getElementById('restaurantModal')
     );
 
-    deleteModal = new bootstrap.Modal(
-        document.getElementById('deleteModal')
-    );
-
     getRestaurants();
 
     document.getElementById('form-new-restaurant').addEventListener('submit', saveRestaurant);
-    document.getElementById('form-delete').addEventListener('submit', deleteRestaurant);
 
     document.getElementById('restaurantModal').addEventListener('hidden.bs.modal', function () {
         const form = document.getElementById('form-new-restaurant');
@@ -55,27 +49,6 @@ async function saveRestaurant(event) {
     }
 }
 
-async function deleteRestaurant(event) {
-    event.preventDefault();
-
-    const formDelete = document.getElementById('form-delete');
-    const label = document.getElementById('deleteModalLabel');
-    label.innerHTML = "Excluindo...";
-
-    const id = formDelete.querySelector('input[name="id"]').value;
-
-    try {
-        await deleteData(`/api/restaurants/${id}/`, () => {
-            getRestaurants();
-            showToast("Restaurante removido com sucesso!", "success");
-            label.innerHTML = "Excluir Restaurante";
-            deleteModal.hide();
-            formDelete.reset();
-        });
-    } catch (e) {
-        label.innerHTML = "Excluir Restaurante";
-    }
-}
 
 document.getElementById("zip_code").addEventListener("blur", function () {
     const cep = this.value.replace("-", "");
@@ -123,10 +96,6 @@ function renderRestaurants(restaurants) {
                        style="cursor: pointer;" 
                        title="Configurar"
                        onclick='openSettingsRestaurantModal(${JSON.stringify(restaurant).replace(/'/g, "&#39;")})'></i>
-                    <i class="bi bi-trash fw-bold btn btn-sm btn-outline-danger" 
-                       style="cursor: pointer;" 
-                       title="Excluir"
-                       onclick='openDeleteRestaurantModal(${JSON.stringify(restaurant).replace(/'/g, "&#39;")})'></i>
                 </div>
             </div>
             <div class="card-body">
@@ -156,20 +125,4 @@ function openEditRestaurantModal(restaurant) {
     form.querySelector('input[name="is_active"]').checked = restaurant.is_active;
 
     restaurantModal.show();
-}
-
-function openDeleteRestaurantModal(restaurant) {
-    const deleteModalLabel = document.getElementById('deleteModalLabel');
-    deleteModalLabel.innerHTML = `Excluir Restaurante - ${restaurant.name}`;
-
-    const nameElement = document.getElementById('delete-name');
-    nameElement.innerHTML = restaurant.name;
-
-    const id = document.getElementById('delete-id');
-    id.value = restaurant.id;
-
-    const deleteMessage = document.getElementById('delete-message');
-    deleteMessage.innerHTML = 'Deletar esse restaurante também vai deletar todas as categorias e produtos deste restaurante';
-
-    deleteModal.show();
 }

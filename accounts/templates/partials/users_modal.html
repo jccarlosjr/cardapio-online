@@ -1,5 +1,5 @@
 
-<div class="modal modal-lg fade"
+<div class="modal modal-md fade"
         data-bs-backdrop="static" data-bs-keyboard="true"
         id="userModal" tabindex="-1" aria-hidden="true"
         aria-labelledby="userModalLabel">
@@ -14,24 +14,17 @@
             <div class="row g-3">
                 <input type="text" id="user-id" name="id" hidden>
 
-                <div class="form-group col-md-8">
+                <div class="form-group col-md-12">
                     <label for="user-name">Nome</label>
                     <input id="user-name" name="name" type="text" class="form-control form-control-sm">
                 </div>
 
-                <div class="form-group col-md-4">
-                    <label for="user-role">Função</label>
-                    <select id="user-role" name="role" class="form-select form-select-sm">
-                        <option value="">Selecione...</option>
-                    </select>
-                </div>
-
-                <div class="form-group col-md-7">
+                <div class="form-group col-md-12">
                     <label for="user-email">E-mail</label>
                     <input id="user-email" name="email" type="email" class="form-control form-control-sm">
                 </div>
 
-                <div class="form-group col-md-5">
+                <div class="form-group col-md-12">
                     <label for="user-password">Senha <small class="text-muted">(deixe em branco para manter)</small></label>
                     <input id="user-password" name="password" type="password" class="form-control form-control-sm" autocomplete="new-password">
                 </div>
@@ -40,6 +33,13 @@
                     <div class="form-check form-switch">
                         <input id="user-is-active" name="is_active" type="checkbox" class="form-check-input" checked>
                         <label class="form-check-label" for="user-is-active">Usuário ativo</label>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12 mt-2">
+                    <label class="form-label fw-semibold text-muted">Grupo / Permissões</label>
+                    <div id="user-groups-container" class="d-flex flex-wrap gap-4 p-2 border rounded bg-light">
+                        <!-- Rendered dynamically -->
                     </div>
                 </div>
             </div>

@@ -2,6 +2,7 @@ from .models import Customer, Address
 from .serializers import CustomerSerializer, AddressSerializer
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from app.permissions import GlobalDefaultPermission
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -17,13 +18,13 @@ from decimal import Decimal
 class CustomerViewSet(viewsets.ModelViewSet):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = (IsAuthenticated, GlobalDefaultPermission,)
 
 
 class AdressViewSet(viewsets.ModelViewSet):
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = (IsAuthenticated, GlobalDefaultPermission)
 
 
 class PublicCheckoutView(APIView):
@@ -107,7 +108,7 @@ class PublicCheckoutView(APIView):
             option_ids = item.get('option_ids', [])
 
             product = get_object_or_404(Product, id=product_id, restaurant=restaurant)
-            
+
             try:
                 price = product.validate_and_calculate_options(option_ids)
             except ValueError as e:

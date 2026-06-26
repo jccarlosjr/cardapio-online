@@ -14,17 +14,6 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 
-class Role(models.Model):
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
-    
-    class Meta:
-        verbose_name = 'Função'
-        verbose_name_plural = 'Funções'
-
-
 class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(unique=True)
@@ -33,7 +22,6 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS = []
     objects = CustomUserManager()
     name = models.CharField(max_length=100)
-    role = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.email

@@ -78,3 +78,24 @@ class OrderStatusHistory(models.Model):
 
     def __str__(self):
         return f'Pedido {self.order.id} - {self.new_status}'
+
+    def save(self, *args, **kwargs):
+        is_new = self.pk is None
+        super().save(*args, **kwargs)
+
+        if not is_new:
+            # Se não for um registro novo, buscamos a próxima transição cronológica
+            # para atualizar seu `old_status` correspondente.
+            next_entry = OrderStatusHistory.objects.filter(
+                order=self.order,
+                created_at__gte=self.created_at
+            ).exclude(pk=self.pk).order_by('created_at', 'id').first()
+
+            if next_entry:
+                next_entry.old_status = self.new_status
+                next_entry.save()
+
+            # Se for o registro mais recente do histórico, atualiza o status do pedido
+            latest = OrderStatusHistory.objects.filter(order=self.order).order_by('-created_at', '-id').first()
+            if latest and latest.pk == self.pk:
+                Order.objects.filter(pk=self.order.pk).update(status=self.new_status)
