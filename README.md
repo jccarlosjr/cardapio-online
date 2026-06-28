@@ -44,7 +44,7 @@ Siga o passo a passo abaixo para rodar a aplicação em seu ambiente de desenvol
 
 ### 1. Clonar o repositório e acessar a pasta
 ```bash
-git clone <url_do_repositorio> cardapio-online
+git clone https://github.com/jccarlosjr/cardapio-online.git cardapio-online
 cd cardapio-online
 ```
 
